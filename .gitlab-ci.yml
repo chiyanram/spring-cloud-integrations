@@ -1,0 +1,22 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+
+stages:
+  - docker-login
+  - build
+
+docker-login:
+  stage: docker-login
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+build:
+  image: gradle:6.1.1-jdk8
+  stage: build
+  script:
+    - gradle build jib -Djib.to.auth.username=gitlab-ci-token -Djib.to.auth.password=$CI_BUILD_TOKEN
