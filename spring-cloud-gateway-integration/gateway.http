@@ -1,9 +1,18 @@
+GET http://localhost:8083/cars/error
+Accept: application/json
+
+###
 GET http://localhost:8083/cars
 Accept: application/json
 
 ###
 
 GET http://localhost:8083/employees
+Accept: application/json
+
+###
+
+GET http://localhost:8081/cars/error
 Accept: application/json
 
 ###

@@ -1,5 +1,9 @@
 package com.rmurugaian.spring.cloud;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +39,20 @@ public class CarController {
                         .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
                 )
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/cars/error")
+    public Mono<ResponseEntity<ErrorResponse>> error() {
+
+        return Mono.just(ResponseEntity.badRequest().body(new ErrorResponse("TEST-ERROR", "value")));
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    private static class ErrorResponse {
+        private String errorCode;
+        private String desc;
     }
 }

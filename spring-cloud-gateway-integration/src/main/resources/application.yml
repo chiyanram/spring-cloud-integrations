@@ -19,3 +19,8 @@ management:
 server:
   port: 8083
 
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
