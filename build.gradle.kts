@@ -5,7 +5,7 @@ plugins {
     java
     idea
     id("org.springframework.boot") version "2.2.5.RELEASE" apply false
-    id("com.google.cloud.tools.jib") version "2.1.0"
+    id("com.google.cloud.tools.jib") version "2.1.0" apply false
 }
 
 repositories {
@@ -17,7 +17,6 @@ group = "com.rmurugaian.spring.cloud"
 allprojects {
     apply(plugin = "idea")
     apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "com.google.cloud.tools.jib")
 
     repositories {
         mavenCentral()
@@ -36,16 +35,16 @@ val junitJupiterVersion = "5.4.0"
 subprojects {
     apply(plugin = "java")
     apply(plugin = "org.springframework.boot")
+    apply(plugin = "com.google.cloud.tools.jib")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-
-    jib {
+    configure<com.google.cloud.tools.jib.gradle.JibExtension> {
         from {
-            image = "java:8-jdk-alpine"
+            image = "adoptopenjdk/openjdk11"
         }
         to {
             image = "$project.dockerRepo/$project.name"
