@@ -80,4 +80,8 @@ subprojects {
             events(org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED, org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED, org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED)
         }
     }
+
+    configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {
+        buildInfo()
+    }
 }
