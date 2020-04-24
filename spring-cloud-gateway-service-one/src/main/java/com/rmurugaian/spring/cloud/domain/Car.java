@@ -1,4 +1,4 @@
-package com.rmurugaian.spring.cloud;
+package com.rmurugaian.spring.cloud.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee {
+public class Car {
     @Id
     private UUID id;
     private String name;
-    private LocalDate joinDate;
+    private LocalDate releaseDate;
 }

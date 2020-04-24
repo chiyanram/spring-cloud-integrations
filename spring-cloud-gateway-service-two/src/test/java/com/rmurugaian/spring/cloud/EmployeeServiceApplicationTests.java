@@ -1,5 +1,6 @@
 package com.rmurugaian.spring.cloud;
 
+import com.rmurugaian.spring.cloud.repository.EmployeeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

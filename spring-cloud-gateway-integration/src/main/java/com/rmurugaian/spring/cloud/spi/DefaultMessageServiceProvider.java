@@ -1,4 +1,4 @@
-package com.rmurugaian.spring.cloud;
+package com.rmurugaian.spring.cloud.spi;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,11 +8,11 @@ import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
-public class DefaultMessagingService implements MessagingService {
+public class DefaultMessageServiceProvider implements MessageServiceProvider {
 
     private final WebClient.Builder messageServiceClient;
 
-    public DefaultMessagingService(final WebClient.Builder messageServiceClient) {
+    public DefaultMessageServiceProvider(final WebClient.Builder messageServiceClient) {
         this.messageServiceClient = messageServiceClient;
     }
 

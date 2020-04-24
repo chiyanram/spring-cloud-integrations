@@ -1,5 +1,7 @@
-package com.rmurugaian.spring.cloud;
+package com.rmurugaian.spring.cloud.controller;
 
+import com.rmurugaian.spring.cloud.domain.Car;
+import com.rmurugaian.spring.cloud.repository.CarRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

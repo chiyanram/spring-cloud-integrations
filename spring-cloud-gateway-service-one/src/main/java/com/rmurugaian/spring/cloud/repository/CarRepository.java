@@ -1,5 +1,6 @@
-package com.rmurugaian.spring.cloud;
+package com.rmurugaian.spring.cloud.repository;
 
+import com.rmurugaian.spring.cloud.domain.Car;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 

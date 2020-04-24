@@ -1,5 +1,7 @@
 package com.rmurugaian.spring.cloud;
 
+import com.rmurugaian.spring.cloud.domain.Employee;
+import com.rmurugaian.spring.cloud.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;

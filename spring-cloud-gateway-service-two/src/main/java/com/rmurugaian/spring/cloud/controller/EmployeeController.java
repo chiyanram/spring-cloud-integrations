@@ -1,5 +1,7 @@
-package com.rmurugaian.spring.cloud;
+package com.rmurugaian.spring.cloud.controller;
 
+import com.rmurugaian.spring.cloud.domain.Employee;
+import com.rmurugaian.spring.cloud.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

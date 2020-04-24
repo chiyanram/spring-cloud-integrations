@@ -1,5 +1,7 @@
 package com.rmurugaian.spring.cloud;
 
+import com.rmurugaian.spring.cloud.domain.Car;
+import com.rmurugaian.spring.cloud.repository.CarRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,10 @@ import java.util.UUID;
 public class CarServiceApplicationTests {
 
     @Autowired
-    CarRepository carRepository;
+    private CarRepository carRepository;
 
     @Autowired
-    WebTestClient webTestClient;
+    private WebTestClient webTestClient;
 
     @Test
     public void testAddCar() {

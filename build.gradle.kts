@@ -58,7 +58,7 @@ subprojects {
 
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-actuator")
-
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-guava")
         compileOnly("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
         testAnnotationProcessor("org.projectlombok:lombok")
