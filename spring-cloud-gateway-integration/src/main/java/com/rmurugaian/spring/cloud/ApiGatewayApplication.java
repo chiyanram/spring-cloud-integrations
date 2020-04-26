@@ -20,13 +20,16 @@ public class ApiGatewayApplication {
 
     @Bean
     public RouteLocator customRouteLocator(final RouteLocatorBuilder builder) {
+
         return builder.routes()
                 .route("car-service",
                         r -> r.path("/cars/**")
+                                .filters(gatewayFilterSpec -> gatewayFilterSpec.addRequestHeader("X-Keycloak-Token", "X-Keycloak-Token-Value"))
                                 .uri("lb://car-service")
                 )
                 .route("employee-service",
                         r -> r.path("/employees/**")
+                                .filters(gatewayFilterSpec -> gatewayFilterSpec.addRequestHeader("X-Keycloak-Token", "X-Keycloak-Token-Value"))
                                 .uri("lb://employee-service")
                 )
                 .build();
@@ -38,4 +41,5 @@ public class ApiGatewayApplication {
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
     }
+
 }

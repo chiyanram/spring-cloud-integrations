@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @RestController
+@Slf4j
 public class CarController {
 
     private final CarRepository carRepository;
@@ -30,7 +32,8 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public Flux<Car> getCars() {
+    public Flux<Car> getCars(@RequestHeader("X-Keycloak-Token") final String keyCloakToken) {
+        log.info("TOKEN {} ", keyCloakToken);
         return carRepository.findAll();
     }
 
