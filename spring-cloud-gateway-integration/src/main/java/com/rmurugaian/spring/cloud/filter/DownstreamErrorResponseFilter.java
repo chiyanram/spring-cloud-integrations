@@ -65,6 +65,7 @@ public class DownstreamErrorResponseFilter implements GlobalFilter, Ordered {
                                     .flatMap(messagingService::resolveErrorResponse)
                                     .map(String::getBytes)
                                     .map(bufferFactory::wrap);
+                    
                     return super.writeWith(responseFlux);
                 }
             }

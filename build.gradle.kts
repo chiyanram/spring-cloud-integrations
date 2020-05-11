@@ -6,6 +6,7 @@ plugins {
     idea
     id("org.springframework.boot") version "2.2.5.RELEASE" apply false
     id("com.google.cloud.tools.jib") version "2.1.0" apply false
+    id("org.unbroken-dome.test-sets") version "3.0.1"
 }
 
 repositories {
@@ -29,17 +30,24 @@ allprojects {
     }
 }
 
-
-val junitJupiterVersion = "5.4.0"
-
 subprojects {
     apply(plugin = "java")
+    apply(plugin = "groovy")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "com.google.cloud.tools.jib")
+    apply(plugin = "org.unbroken-dome.test-sets")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    configure<org.unbrokendome.gradle.plugins.testsets.dsl.TestSetContainer> {
+        createTestSet("integrationTest") {
+            dirName = "test-integration"
+            sourceSet.compileClasspath += sourceSets["main"].output + sourceSets["test"].output + configurations["testRuntimeClasspath"]
+            sourceSet.runtimeClasspath += sourceSet.compileClasspath + sourceSets["test"].runtimeClasspath
+        }
     }
 
     configure<com.google.cloud.tools.jib.gradle.JibExtension> {
@@ -63,25 +71,34 @@ subprojects {
         annotationProcessor("org.projectlombok:lombok")
         testAnnotationProcessor("org.projectlombok:lombok")
 
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
-        testImplementation("junit:junit")
-        testImplementation(platform("org.junit:junit-bom:$junitJupiterVersion"))
-        testImplementation("org.junit.jupiter:junit-jupiter-api")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-        testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
-        testRuntime("org.junit.platform:junit-platform-launcher")
+        testImplementation("org.codehaus.groovy:groovy-all:2.4.15")
+        testImplementation("org.spockframework:spock-core:1.2-groovy-2.4")
+        testImplementation("org.spockframework:spock-spring:1.2-groovy-2.4")
+        testImplementation("com.athaydes:spock-reports:1.7.1") {
+            isTransitive = false
+        }
+        "testImplementation"("org.springframework.boot:spring-boot-starter-test")
+        "integrationTestImplementation"("org.testcontainers:spock:1.13.0")
+        "integrationTestImplementation"("org.testcontainers:mssqlserver:1.14.0")
+        "integrationTestImplementation"("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
     }
 
-    tasks.withType<Test> {
-        useJUnitPlatform()
-        testLogging {
-            showExceptions = true
-            showStandardStreams = true
-            events(org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED, org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED, org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED)
+
+    tasks {
+        val check = named("check") { dependsOn("integrationTest") }
+        val integrationTest = named("integrationTest", Test::class) {
+            mustRunAfter("test")
+            systemProperty("testContainers", project.properties["testContainers"] as String)
         }
     }
 
     configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {
         buildInfo()
+    }
+}
+
+configurations {
+    all {
+        exclude(group = "org.slf4j", module = "slf4j-log4j12")
     }
 }
